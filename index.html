@@ -18,20 +18,30 @@
             transform: translate(-50%, -50%);
             text-align: center;
         }
-        h1 {
-            color: #fff;
-            font-size: 3em;
-            font-family: Arial, sans-serif;
-            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
-            animation: glow 1s ease-in-out infinite alternate;
+        .envelope {
+            background: #f5e8c1;
+            width: 500px;
+            height: 400px;
+            position: relative;
+            margin: 0 auto 30px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de, 0 0 50px #ff00de, 0 0 75px #ff00de;
-            }
-            to {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
-            }
+
+        .letter {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            right: 10px;
+            bottom: 5px;
+            background: white;
+            padding: 20px;
+            overflow: auto;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            text-align: left;
+            font-family: monospace;
         }
         #heart {
             position: relative;
@@ -52,13 +62,26 @@
             transform-origin: 0 100%;
         }
         #heart:after {
-            left: 0;            transform-origin: 100% 100%;
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        #heart {
+            animation: heartbeat 1s infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>我爱你</h1>
+        <div class="envelope">
+            <div class="letter">
+            </div>
+        </div>
         <div id="heart"></div>
     </div>
     <canvas id="canvas"></canvas>
@@ -114,6 +137,26 @@
 
         init();
         animate();
+        const text = "                亲爱的老婆--张可欣， 我们结婚三年了，我想借这个机会再一次向你表白我的心意。\n" +
+            "                这三年来，我们一起经历了许多风风雨雨，无论是欢笑还是泪水，你始终陪伴在我身边。你的坚强、智慧和温柔，让我感到无比幸运和感激。\n" +
+            "                你是我生命中的阳光，照亮了我心中的每一个角落。你的微笑、你的关怀，让我在每一个艰难的时刻都能找到前进的力量。你的包容和理解，让我们的家变得更加温暖和睦。\n" +
+            "                我深深地爱着你，这份爱随着时间的推移只会越来越深。你是我的唯一，是我生命中最重要的人。我愿意用余生去守护你，去爱你，去和你一起面对未来的每一个挑战和惊喜。\n" +
+            "                感谢你愿意嫁给我，成为我的妻子。感谢你在这三年里给予我的一切。我会尽我所能，让你成为世界上最幸福的人。\n" +
+            "                亲爱的，我爱你。\n" +
+            "                永远爱你的，张笑溶";
+        const letter = document.querySelector('.letter');
+        let index = 0;
+
+        function type() {
+          if (index < text.length) {
+            letter.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, 100); // 每个字符之间的延迟,可以调整
+          }
+        }
+
+        // 开始打字效果
+        type();
     </script>
 </body>
 </html>
